@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  become: true
+  tasks: 
+   - name: install epel
+     yum: name=epel-release state=present 
+   - name: install java
+     yum: name=java-1.8.0-openjdk.x86_64 state=started enabled=yes
+   - name: install jenkins repo
+     get_url: 
+     url: 
+   - name: install jenkins
+     yum: name=jenkins state=present  
+   - name: copy a file to /var/www/html/
+     copy: src=/root/ansibleyaml/index.html dest=/var/www/html/
+     notify: restart httpd 
